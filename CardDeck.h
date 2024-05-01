@@ -1,6 +1,3 @@
-#pragma  once	
-
-#include <cmath>
 #include <iostream>
 #include <algorithm>
 #include <istream>
@@ -55,7 +52,7 @@ public:
 private:
 	void resize();
 
-	bool is_uniq(const Card&);
+	bool is_uniq(const Card&) const;
 
 	size_t m_capacity;
 	size_t m_size;

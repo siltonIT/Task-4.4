@@ -64,7 +64,7 @@ CardDeck operator+ (const CardDeck& deck1, const CardDeck& deck2) {
 CardDeck operator- (const CardDeck& deck1, const CardDeck& deck2) {
 	CardDeck res(deck1);
 
-	for(size_t i = 0; i < deck2.m_size; ++i) 
+	for(size_t i = 0; i < deck2.m_size; ++i)
 		res -= deck2.m_cards[i];
 
 	return res;
@@ -73,9 +73,9 @@ CardDeck operator- (const CardDeck& deck1, const CardDeck& deck2) {
 CardDeck operator/ (const CardDeck& deck1, const CardDeck& deck2) {
 	CardDeck res(deck1);
 
-	for(size_t i = 0; i < deck2.m_size; ++i)
-		if(!res.is_uniq(deck2.m_cards[i]))
-			res -= deck2.m_cards[i];
+	for(size_t i = 0; i < res.m_size; ++i)
+		if(deck2.is_uniq(res.m_cards[i]))
+			res -= res.m_cards[i];
 
 	return res;
 }
@@ -85,7 +85,7 @@ CardDeck::CardDeck(): m_capacity(def_capacity), m_size(0), m_cards(new Card[m_ca
 CardDeck::CardDeck(size_t capacity): m_capacity(capacity), m_size(0), m_cards(new Card[m_capacity]) {}
 
 CardDeck::CardDeck(const CardDeck& other): m_capacity(other.m_capacity), m_size(other.m_size), m_cards(new Card[m_capacity]) {
-	std::copy(m_cards, other.m_cards, m_size);
+	std::copy(other.m_cards, other.m_cards + other.m_size, m_cards);
 }
 
 CardDeck& CardDeck::operator= (CardDeck other) {
@@ -148,7 +148,7 @@ size_t CardDeck::size() const {
 	return m_size;
 }
 
-bool CardDeck::is_uniq(const Card& key) {
+bool CardDeck::is_uniq(const Card& key) const {
 	for(size_t i = 0; i < m_size; ++i)
 		if(m_cards[i] == key)
 			return false;
@@ -160,8 +160,8 @@ void CardDeck::resize() {
 	size_t capacity = m_capacity;
 	Card* cards = new Card[capacity];
 
-	std::copy(cards, m_cards, m_size);
-	
+	std::copy(m_cards, m_cards + m_size, cards);
+
 	delete[] m_cards;
 	m_cards = cards;
 	m_capacity = capacity;
