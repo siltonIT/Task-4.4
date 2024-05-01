@@ -1,3 +1,5 @@
+#pragma once
+
 #include <iostream>
 
 #define size_t unsigned int 
@@ -11,7 +13,9 @@ struct Card {
 	
 	size_t m_dignity;
 
-	Card() = delete;
+	Card();
 
 	Card(Suit, size_t);
+
+	bool operator== (const Card&);
 };
